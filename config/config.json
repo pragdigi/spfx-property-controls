@@ -1,0 +1,19 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "pp-controls-test-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/ppControlsTest/PpControlsTestWebPart.js",
+          "manifest": "./src/webparts/ppControlsTest/PpControlsTestWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "PpControlsTestWebPartStrings": "lib/webparts/ppControlsTest/loc/{locale}.js",
+    "PropertyControlStrings": "node_modules/@pnp/spfx-property-controls/lib/loc/{locale}.js"
+  }
+}
