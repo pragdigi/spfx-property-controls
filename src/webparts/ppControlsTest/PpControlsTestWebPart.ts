@@ -23,7 +23,7 @@ PrincipalType
 export interface IPpControlsTestWebPartProps {
   description: string;
   people: IPropertyFieldGroupOrPerson[];
-  expansionOpions: any[];
+  expansionOptions: any[];
 }
 
 export default class PpControlsTestWebPart extends BaseClientSideWebPart<IPpControlsTestWebPartProps> {
@@ -37,16 +37,35 @@ export default class PpControlsTestWebPart extends BaseClientSideWebPart<IPpCont
               <span class="${ styles.title }">Welcome to SharePoint!</span>
               <p class="${ styles.subTitle }">Customize SharePoint experiences using Web Parts.</p>
               <p class="${ styles.description }">${escape(this.properties.description)}</p>
-              <p class="${ styles.description }">${this.properties.people}</p>
-              <p class="${ styles.description }">${this.properties.expansionOpions}</p>
               <a href="https://aka.ms/spfx" class="${ styles.button }">
                 <span class="${ styles.label }">Learn more</span>
               </a>
+              <div class="selectedPeople"></div>
+              <div class="expansionOptions"></div>
             </div>
           </div>
         </div>
       </div>`;
-  }
+      if (this.properties.people && this.properties.people.length > 0) {
+        let peopleList: string = '';
+        this.properties.people.forEach((person) => {
+          peopleList = peopleList + `<li>${person.fullName} (${person.email})</li>`;
+        });
+  
+        this.domElement.getElementsByClassName('selectedPeople')[0].innerHTML = `<ul>${peopleList}</ul>`;
+      }
+  
+      if (this.properties.expansionOptions && this.properties.expansionOptions.length > 0) {
+        let expansionOptions: string  = '';
+        this.properties.expansionOptions.forEach((option) => {
+          expansionOptions = expansionOptions + `<li>${ option['Region'] }: ${ option['Comment'] } </li>`;
+        });
+        if (expansionOptions.length > 0) {
+          this.domElement.getElementsByClassName('expansionOptions')[0].innerHTML = `<ul>${ expansionOptions }</ul>`;
+        }
+      }    
+    }
+  
 
 
   protected get dataVersion(): Version {
@@ -84,7 +103,7 @@ export default class PpControlsTestWebPart extends BaseClientSideWebPart<IPpCont
                   label: 'Possible expansion options',
                   panelHeader: 'Possible expansion options',
                   manageBtnLabel: 'Manage expansion options',
-                  value: this.properties.expansionOpions,
+                  value: this.properties.expansionOptions,
                   fields: [
                     {
                       id: 'Region',
